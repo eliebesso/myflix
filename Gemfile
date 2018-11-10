@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
-ruby '2.1.2'
+ruby '2.2.2'
 
 gem 'bootstrap-sass', '3.1.1.1'
+gem "bootstrap_form", "~> 2.7"
 gem 'coffee-rails'
 gem 'rails', '4.1.1'
 gem 'haml-rails'
@@ -9,6 +10,9 @@ gem 'sass-rails'
 gem 'uglifier'
 gem 'jquery-rails'
 gem 'pg'
+gem 'bcrypt', '~> 3.1.2'
+gem 'fabrication'
+gem 'faker'
 
 group :development do
   gem 'thin'
@@ -26,6 +30,7 @@ group :test do
   gem 'database_cleaner', '1.4.1'
   gem 'shoulda-matchers', '2.7.0'
   gem 'vcr', '2.9.3'
+  gem 'rspec-rails', '2.99'
 end
 
 group :production do
