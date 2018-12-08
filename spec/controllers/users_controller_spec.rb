@@ -22,36 +22,12 @@ describe UsersController do
 			it "redirects to the sign in page" do
 				expect(response).to redirect_to login_path
 			end
-
-			it "makes the user follow the inviter" do
-				 josias = Fabricate(:user)
-				 invitation = Fabricate(:invitation, inviter: josias, recipient_email: 'jurema@example.com')
-				 post :create, user: { email: 'jurema@example.com', password: 'password', full_name: 'Jurema Bezerra' }, invitation_token: invitation.token
-				 jurema = User.where(email: 'jurema@example.com').first
-				 expect(jurema.follows?(josias)).to be_true
-			end
-
-			it "makes the inviter follow the user" do
-				 josias = Fabricate(:user)
-				 invitation = Fabricate(:invitation, inviter: josias, recipient_email: 'jurema@example.com')
-				 post :create, user: { email: 'jurema@example.com', password: 'password', full_name: 'Jurema Bezerra' }, invitation_token: invitation.token
-				 jurema = User.where(email: 'jurema@example.com').first
-				 expect(josias.follows?(jurema)).to be_true
-			end
-
-			it "expires the invitation upon acceptance" do
-				 josias = Fabricate(:user)
-				 invitation = Fabricate(:invitation, inviter: josias, recipient_email: 'jurema@example.com')
-				 post :create, user: { email: 'jurema@example.com', password: 'password', full_name: 'Jurema Bezerra' }, invitation_token: invitation.token
-				 jurema = User.where(email: 'jurema@example.com').first
-				 expect(Invitation.first.token).to be_nil
-			end
 		end
 
 		context "with invalid input" do
 
 			before do
-				post :create, user: { email: "josias@example.com" }
+				post :create, user: {password: "password", full_name: "Elie B"}
 			end
 			
 			it "does not create the user" do
@@ -69,7 +45,6 @@ describe UsersController do
 
 		context "sending emails" do
 			after { ActionMailer::Base.deliveries.clear }
-
 			it "sends out email to the user with valid inputs" do
 				post :create, user: { email: "josias@example.com", password: "password", full_name: "Josias Silva" }
 				expect(ActionMailer::Base.deliveries.last.to).to eq(['josias@example.com']) 
@@ -99,39 +74,6 @@ describe UsersController do
 			expect(assigns(:user)).to eq(josias)
 		end
 	end
-
-	describe 'GET new_with_invitation_token' do
-		it "renders the :new view template" do
-			invitation = Fabricate(:invitation)
-			get :new_with_invitation_token, token: invitation.token
-			expect(response).to render_template :new
-		end
-
-		it "sets @user with recipient's email" do
-			invitation = Fabricate(:invitation)
-			get :new_with_invitation_token, token: invitation.token
-			expect(assigns(:user).email).to eq(invitation.recipient_email)
-		end
- 
-		it "sets @invitation_token" do
-			invitation = Fabricate(:invitation)
-			get :new_with_invitation_token, token: invitation.token
-			expect(assigns(:invitation_token)).to eq(invitation.token)
-		end
-
-		it "redirects to expired token page for invalid tokens" do
-			get :new_with_invitation_token, token: 'safafaf'
-			expect(response).to redirect_to expired_token_path
-		end
-	end
-
 end
-
-
-
-
-
-
-
 
 
