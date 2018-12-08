@@ -31,7 +31,7 @@ Myflix::Application.configure do
     :enable_starttls_auto => true
   }
 
-  config.action_mailer.default_url_options = { protocol: 'https', :host => 'www.meachei.com' }
+  config.action_mailer.default_url_options = { protocol: 'https', :host => 'www.quiet-castle-72726.herokuapp.com' }
 
 end
 
