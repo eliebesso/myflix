@@ -13,6 +13,7 @@ gem 'pg'
 gem 'bcrypt', '~> 3.1.2'
 gem 'fabrication'
 gem 'faker'
+gem 'sendgrid-ruby'
 
 group :development do
   gem 'thin'
