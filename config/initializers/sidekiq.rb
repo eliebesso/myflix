@@ -3,11 +3,11 @@ Sidekiq::Extensions.enable_delay!
 if Rails.env.production?
 
   Sidekiq.configure_client do |config|
-    config.redis = { url: ENV[ENV['REDIS_URL']] }
+    config.redis = { url: ENV[ENV['REDIS_URL']], :size => 1 }
   end
 
   Sidekiq.configure_server do |config|
-    config.redis = { url: ENV[ENV['REDIS_URL']] }
+    config.redis = { url: ENV[ENV['REDIS_URL']], :size => 10 }
     
     Rails.application.config.after_initialize do
       ActiveRecord::Base.connection_pool.disconnect!
@@ -21,5 +21,5 @@ if Rails.env.production?
       end
     end
   end
-
 end
+
