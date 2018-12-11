@@ -14,6 +14,9 @@ gem 'bcrypt', '~> 3.1.2'
 gem 'fabrication'
 gem 'faker'
 gem 'sendgrid-ruby'
+gem 'sidekiq'
+gem 'redis'
+gem 'puma'
 
 group :development do
   gem 'thin'
