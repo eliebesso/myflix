@@ -37,6 +37,10 @@ Myflix::Application.routes.draw do
   resources :password_resets, only: [:show, :create]
   get 'expired_token', to: 'password_resets#expired_token'
   resources :invitations, only: [:new, :create]
+
+  require 'sidekiq/web'
+  Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
+  mount Sidekiq::Web => '/sidekiq'
 end
 
 
