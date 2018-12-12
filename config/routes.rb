@@ -45,7 +45,8 @@ Myflix::Application.routes.draw do
     # - See https://thisdata.com/blog/timing-attacks-against-string-comparison/
     # - Use & (do not use &&) so that it doesn't short circuit.
     # - Use digests to stop length information leaking (see also ActiveSupport::SecurityUtils.variable_size_secure_compare)
-    username == ENV["SIDEKIQ_USERNAME"] & password == ENV["SIDEKIQ_PASSWORD"]
+    (username == ENV["SIDEKIQ_USERNAME"]) &
+    (password == ENV["SIDEKIQ_PASSWORD"])
   end if Rails.env.production?
   Sidekiq::Web.set :session_secret, Rails.application.secrets[:secret_key_base]
   mount Sidekiq::Web, at: "/sidekiq"
