@@ -18,3 +18,7 @@ module Myflix
     config.autoload_paths << "#{Rails.root}/lib"
   end
 end
+
+Raven.configure do |config|
+  config.dsn = ENV['SENTRY_DSN']
+end
