@@ -17,6 +17,9 @@ gem 'sendgrid-ruby'
 gem 'sidekiq'
 gem 'redis'
 gem 'puma'
+gem 'carrierwave'
+gem 'mini_magick'
+gem 'carrierwave-aws'
 
 group :development do
   gem 'thin'
